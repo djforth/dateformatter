@@ -9,7 +9,7 @@ var watchify     = require('watchify');
 // var vendor     = require("../config/externals.js")
 
 var destFolder = './dist';
-var sourceFile = './lib/dateFormmatter.coffee'
+var sourceFile = './lib/dateFormatter.coffee'
 
 function bundleShare(b, destFile) {
   b.bundle()
