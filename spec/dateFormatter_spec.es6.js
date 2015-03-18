@@ -6,27 +6,57 @@ describe('DateFormatter', function(){
   let dateFmt;
 
   beforeEach(function(){
-    dateFmt = new DateFormatter("2013-01-29");
+    dateFmt = new DateFormatter('2015-01-18');
   })
 
   it('It should exist', function(){
     expect(dateFmt).toBeDefined()
   })
 
+  describe('create date', function() {
+
+    it("should create date on creation if numbers", function() {
+      dateFmt = new DateFormatter(2015,0,18,16,44);
+      expect(dateFmt.getDate()).toEqual(new Date(2015,0,18,16,44))
+    });
+
+    it("should create date on creation if string with -", function() {
+      dateFmt = new DateFormatter('2015-01-18');
+      expect(dateFmt.getDate()).toEqual(new Date(2015,0,18))
+    });
+
+    it("should create date on creation if string with slash ", function() {
+      dateFmt = new DateFormatter('2015/01/18');
+      expect(dateFmt.getDate()).toEqual(new Date(2015,0,18))
+    });
+  });
+
   describe('show create valid date from string', function(){
 
-    let date_str, date_obj;
+    let date_str,
+        date_obj,
+        time_str,
+        time_obj,
+        time2_str,
+        time2_obj;
 
     beforeEach(function(){
       date_str = '2015-01-18';
       date_obj = new Date(2015, 0, 18);
+
+      time_str = '2015-01-18 16:44'
+      time_obj = new Date(2015, 0, 18, 16, 44)
+
+      time2_str = '2015-01-18 16:44:33'
+      time2_obj = new Date(2015, 0, 18, 16, 44, 33)
+
     })
 
 
-    it('should throw an error if not a string', function(){
+    it('should throw an error if malformed string', function(){
       expect(function(){
-        dateFmt.dateFix(123)
-      }).toThrowError("Not a string");
+        dateFmt.dateFix("test")
+      }).toThrowError("Date is malformed");
     })
 
     it('should return correct date', function(){
@@ -34,28 +64,17 @@ describe('DateFormatter', function(){
       expect(_.isDate(date)).toBeTruthy();
       expect(date.getTime()).toEqual(date_obj.getTime());
     })
-  });
 
-  describe('show create valid dateTime from string', function(){
-
-    let date_str, date_obj;
-
-    beforeEach(function(){
-      date_str = '2015-01-18 16:44'
-      date_obj = new Date(2015, 0, 18, 16, 44)
-    })
-
-
-    it('show create valid dateTime from string', function(){
-      expect(function(){
-        dateFmt.dateTimeFix(123)
-      }).toThrowError("Not a string");
+    it('should return correct date', function(){
+      let date = dateFmt.dateFix(time_str);
+      expect(_.isDate(date)).toBeTruthy();
+      expect(date.getTime()).toEqual(time_obj.getTime());
     })
 
     it('should return correct date', function(){
-      let date = dateFmt.dateTimeFix(date_str);
+      let date = dateFmt.dateFix(time2_str);
       expect(_.isDate(date)).toBeTruthy();
-      expect(date.getTime()).toEqual(date_obj.getTime());
+      expect(date.getTime()).toEqual(time2_obj.getTime());
     })
   });
 
@@ -81,20 +100,8 @@ describe('DateFormatter', function(){
       spyOn(dateFmt, "fixTime").and.callThrough()
       spyOn(dateFmt, "set12Hour").and.callThrough()
       date_obj = new Date(2015, 0, 18, 16, 44, 44)
+      dateFmt.date = date_obj
     })
-
-
-    it('should throw an error if formatter not a string', function(){
-      expect(function(){
-        dateFmt.formatDate(date_obj, 123)
-      }).toThrowError("Not a string");
-    })
-
-    it('should throw an error if not a date', function(){
-      expect(function(){
-        dateFmt.formatDate(123, "%Y")
-      }).toThrowError("Not a date");
-    });
 
     it('show full year', function(){
       let fyr = dateFmt.formatDate(date_obj, "%Y")
@@ -186,9 +193,7 @@ describe('DateFormatter', function(){
 
   describe('checks if Date or string', function() {
     it("throw an error if not a Date", function() {
-      expect(function(){
-        dateFmt.isDate(123)
-      }).toThrowError("Not a date");
+      expect(dateFmt.isDate(123)).toBeFalsy();
     });
 
     it("return true if a Date", function() {
@@ -197,9 +202,7 @@ describe('DateFormatter', function(){
 
 
     it("throw an error if not a String", function() {
-      expect(function(){
-        dateFmt.isString(123)
-      }).toThrowError("Not a string");
+      expect(dateFmt.isString(123)).toBeFalsy();
     });
 
     it("return true if a Date", function() {

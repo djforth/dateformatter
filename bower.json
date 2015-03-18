@@ -1,0 +1,22 @@
+{
+  "name": "dateformatter",
+  "main": "dist/date_formatter.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/djforth/dateformatter",
+  "authors": [
+    "Adrian Stainforth <adrian@morsedigtial.com>"
+  ],
+  "description": "Utility For processing and formatting dates in javascript",
+  "keywords": [
+    "Date",
+    "formatter"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -8,54 +8,74 @@ var DateFormatter = (function () {
   function DateFormatter() {
     _classCallCheck(this, DateFormatter);
 
+    var args = Array.prototype.slice.call(arguments);
+    // yyyy-mm-dd hh:mm:ss
+    // yyyy-mm-dd hh:mm
+    // yyyy-mm-dd
+    this.date_test = /^\d{4}-\d{2}-\d{2}( \d{2}:\d{2}:\d{2}(\.\d{3})?)?$/;
+
     this.date = null;
     this.AMPM = "am";
     this.SHORT_DAYS = ["Sun", "Mon", "Tues", "Weds", "Thurs", "Fri", "Sat"];
     this.DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     this.SHORT_MONTHS = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
     this.MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    this.setDate.apply(this, args);
   }
 
   _createClass(DateFormatter, {
-    dateFix: {
-      value: function dateFix(date_str) {
-        var date_regex = /^\s*(\d{4})-(\d{2})-(\d{2})*$/;
+    compact: {
+      value: function compact(array) {
+        // Ripped from lodash
+        var index = -1,
+            length = array ? array.length : 0,
+            resIndex = -1,
+            result = [];
 
-        if (this.isString(date_str)) {
-          var matches = date_str.match(date_regex);
-
-          if (matches) {
-            var year = parseInt(matches[1]);
-            var month = parseInt(matches[2], 10) - 1;
-            var date = parseInt(matches[3], 10);
-
-            return new Date(year, month, date);
-          };
+        while (++index < length) {
+          var value = array[index];
+          if (value) {
+            result[++resIndex] = value;
+          }
         }
-
-        return "Not valid";
+        return result;
       }
     },
-    dateTimeFix: {
-      value: function dateTimeFix(date_str) {
-        var date_regex = /^\s*(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2})\s*$/;
+    dateFix: {
+      value: function dateFix(date_str) {
+        // yyyy-mm-dd hh:mm
+        // yyyy-mm-dd hh:mm
+        // yyyy-mm-dd
+        var date_regex = /^\s*(\d{4})-(\d{2})-(\d{2})+!?(\s(\d{2}):(\d{2})|\s(\d{2}):(\d{2}):(\d+))?$/;
+        var matches = date_str.match(date_regex);
 
-        if (this.isString(date_str)) {
-          var matches = date_str.match(date_regex);
+        if (matches) {
+          matches = this.compact(matches);
+          // console.log('matches', matches);
 
-          if (matches) {
-            var year = parseInt(matches[1]);
-            var month = parseInt(matches[2], 10) - 1;
-            var date = parseInt(matches[3], 10);
+          var year = parseInt(matches[1]);
+          var month = parseInt(matches[2], 10) - 1;
+          var date = parseInt(matches[3], 10);
 
-            date = new Date(year, month, date);
-            date.setHours(matches[4], matches[5], 0, 0);
+          date = new Date(year, month, date);
 
-            return date;
-          };
-        }
+          if (matches[5]) {
+            date.setHours(matches[5]);
+          }
 
-        return "Not valid";
+          if (matches[6]) {
+            date.setMinutes(matches[6]);
+          }
+
+          if (matches[7]) {
+            date.setSeconds(matches[7]);
+          }
+
+          return date;
+        } else {
+          throw new Error("Date is malformed");
+        };
       }
     },
     fixTime: {
@@ -71,9 +91,7 @@ var DateFormatter = (function () {
       value: function formatDate() {
         var date = undefined,
             fmt = undefined;
-        if (this.isDate(arguments[0])) {
-          date = arguments[0];
-        }
+        date = this.date;
 
         if (this.isString(arguments[1])) {
           fmt = arguments[1];
@@ -110,25 +128,19 @@ var DateFormatter = (function () {
         return fmt;
       }
     },
+    getDate: {
+      value: function getDate() {
+        return this.date;
+      }
+    },
     isDate: {
       value: function isDate(d) {
-
-        if (Object.prototype.toString.call(d) === "[object Date]") {
-          return true;
-        } else {
-          throw new Error("Not a date");
-          return false;
-        }
+        return Object.prototype.toString.call(d) === "[object Date]";
       }
     },
     isString: {
       value: function isString(str) {
-        if (Object.prototype.toString.call(str) === "[object String]") {
-          return true;
-        } else {
-          throw new Error("Not a string");
-          return false;
-        }
+        return Object.prototype.toString.call(str) === "[object String]";
       }
     },
     set12Hour: {
@@ -138,6 +150,20 @@ var DateFormatter = (function () {
           return hour;
         } else {
           return hour - 12;
+        }
+      }
+    },
+    setDate: {
+      value: function setDate() {
+        var args = Array.prototype.slice.call(arguments);
+        if (this.isString(args[0]) && this.date_test.test(args[0])) {
+          this.date = this.dateFix(args[0]);
+        } else {
+          if (this.isString(args[0])) {
+            this.date = new Date(args[0]);
+          } else {
+            this.date = new Date(Date.UTC.apply(null, args));
+          }
         }
       }
     }
