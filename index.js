@@ -88,13 +88,13 @@ var DateFormatter = (function () {
       }
     },
     formatDate: {
-      value: function formatDate() {
+      value: function formatDate(str) {
         var date = undefined,
             fmt = undefined;
         date = this.date;
 
-        if (this.isString(arguments[1])) {
-          fmt = arguments[1];
+        if (this.isString(str)) {
+          fmt = str;
         }
 
         // http://jsperf.com/date-formatting2

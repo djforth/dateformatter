@@ -104,87 +104,87 @@ describe('DateFormatter', function(){
     })
 
     it('show full year', function(){
-      let fyr = dateFmt.formatDate(date_obj, "%Y")
+      let fyr = dateFmt.formatDate("%Y")
       expect(fyr).toEqual("2015")
     });
 
     it('show year', function(){
-      let yr = dateFmt.formatDate(date_obj, "%y")
+      let yr = dateFmt.formatDate("%y")
       expect(yr).toEqual("15")
     });
 
     it('show month', function(){
-      let fmt = dateFmt.formatDate(date_obj, "%m")
+      let fmt = dateFmt.formatDate("%m")
       expect(fmt).toEqual("1")
     });
 
     it('show month text full', function(){
-      let fmt = dateFmt.formatDate(date_obj, "%B")
+      let fmt = dateFmt.formatDate("%B")
       expect(fmt).toEqual("January")
     });
 
     it('show month text short', function(){
-      let fmt = dateFmt.formatDate(date_obj, "%b")
+      let fmt = dateFmt.formatDate("%b")
       expect(fmt).toEqual("Jan")
     });
 
     it('show date', function(){
-      let fmt = dateFmt.formatDate(date_obj, "%d")
+      let fmt = dateFmt.formatDate("%d")
       expect(fmt).toEqual("18")
     });
 
     it('show day text short', function(){
-      let fmt = dateFmt.formatDate(date_obj, "%a")
+      let fmt = dateFmt.formatDate("%a")
       expect(fmt).toEqual("Sun")
     });
 
     it('show day text long', function(){
-      let fmt = dateFmt.formatDate(date_obj, "%A")
+      let fmt = dateFmt.formatDate("%A")
       expect(fmt).toEqual("Sunday")
     });
 
     it('show hours', function(){
-      let fmt = dateFmt.formatDate(date_obj, "%H")
+      let fmt = dateFmt.formatDate("%H")
       expect(fmt).toEqual("16")
       expect(dateFmt.fixTime).toHaveBeenCalled()
 
       date_obj.setHours(9)
-      fmt = dateFmt.formatDate(date_obj, "%H")
+      fmt = dateFmt.formatDate("%H")
       expect(fmt).toEqual("09")
     });
 
     it('show hours in AM/PM', function(){
-      let fmt = dateFmt.formatDate(date_obj, "%-l%p")
+      let fmt = dateFmt.formatDate("%-l%p")
       expect(fmt).toEqual("4pm")
       expect(dateFmt.set12Hour).toHaveBeenCalled()
 
       date_obj.setHours(9)
-      fmt = dateFmt.formatDate(date_obj, "%-l%p")
+      fmt = dateFmt.formatDate("%-l%p")
       expect(fmt).toEqual("9am")
     });
 
     it('show minutes', function(){
-      let fmt = dateFmt.formatDate(date_obj, "%M")
+      let fmt = dateFmt.formatDate("%M")
       expect(fmt).toEqual("44")
       expect(dateFmt.fixTime).toHaveBeenCalled()
 
       date_obj.setMinutes(9)
-      fmt = dateFmt.formatDate(date_obj, "%M")
+      fmt = dateFmt.formatDate("%M")
       expect(fmt).toEqual("09")
     });
 
     it('show seconds', function(){
-      let fmt = dateFmt.formatDate(date_obj, "%S")
+      let fmt = dateFmt.formatDate("%S")
       expect(fmt).toEqual("44")
       expect(dateFmt.fixTime).toHaveBeenCalled()
 
       date_obj.setSeconds(9)
-      fmt = dateFmt.formatDate(date_obj, "%S")
+      fmt = dateFmt.formatDate("%S")
       expect(fmt).toEqual("09")
     });
 
     it("should format all date chained", function() {
-      let fmt = dateFmt.formatDate(date_obj, "%A, %d %B %Y at %-l:%M%p.")
+      let fmt = dateFmt.formatDate("%A, %d %B %Y at %-l:%M%p.")
       expect(fmt).toEqual("Sunday, 18 January 2015 at 4:44pm.")
     });
 
