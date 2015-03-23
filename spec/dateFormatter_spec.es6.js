@@ -179,13 +179,13 @@ describe('DateFormatter', function(){
     });
 
     it('show minutes without 0', function(){
-      let fmt = dateFmt.formatDate("%m")
+      let fmt = dateFmt.formatDate("%-M")
       console.log('fmt', fmt);
       expect(fmt).toEqual("44")
       expect(dateFmt.fixTime).toHaveBeenCalled()
 
       date_obj.setMinutes(9)
-      fmt = dateFmt.formatDate("%m")
+      fmt = dateFmt.formatDate("%-M")
       expect(fmt).toEqual("9")
     });
 

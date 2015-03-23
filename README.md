@@ -61,7 +61,7 @@ Options:
 * %-l - 12 hour (e.g. 8 or after 12 like 16:00 would be 4)
 * %p - AM or PM
 * %M - Mins with 0 (e.g. 09)
-* %m - Mins without 0 (e.g. 9)
+* %-M - Mins without 0 (e.g. 9)
 * %S - seconds with 0 (e.g. 09)
 * %s - seconds without 0 (e.g. 9)
 
