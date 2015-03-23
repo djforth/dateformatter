@@ -15,6 +15,11 @@ describe('DateFormatter', function(){
 
   describe('create date', function() {
 
+    it("should add date if passed as date", function() {
+      dateFmt = new DateFormatter(new Date(2015,0,18,16,44));
+      expect(dateFmt.getDate()).toEqual(new Date(2015,0,18,16,44))
+    });
+
     it("should create date on creation if numbers", function() {
       dateFmt = new DateFormatter(2015,0,18,16,44);
       expect(dateFmt.getDate()).toEqual(new Date(2015,0,18,16,44))
@@ -163,7 +168,7 @@ describe('DateFormatter', function(){
       expect(fmt).toEqual("9am")
     });
 
-    it('show minutes', function(){
+    it('show minutes with 0', function(){
       let fmt = dateFmt.formatDate("%M")
       expect(fmt).toEqual("44")
       expect(dateFmt.fixTime).toHaveBeenCalled()
@@ -171,6 +176,17 @@ describe('DateFormatter', function(){
       date_obj.setMinutes(9)
       fmt = dateFmt.formatDate("%M")
       expect(fmt).toEqual("09")
+    });
+
+    it('show minutes without 0', function(){
+      let fmt = dateFmt.formatDate("%m")
+      console.log('fmt', fmt);
+      expect(fmt).toEqual("44")
+      expect(dateFmt.fixTime).toHaveBeenCalled()
+
+      date_obj.setMinutes(9)
+      fmt = dateFmt.formatDate("%m")
+      expect(fmt).toEqual("9")
     });
 
     it('show seconds', function(){
@@ -181,6 +197,16 @@ describe('DateFormatter', function(){
       date_obj.setSeconds(9)
       fmt = dateFmt.formatDate("%S")
       expect(fmt).toEqual("09")
+    });
+
+    it('show seconds without 0', function(){
+      let fmt = dateFmt.formatDate("%s")
+      expect(fmt).toEqual("44")
+      expect(dateFmt.fixTime).toHaveBeenCalled()
+
+      date_obj.setSeconds(9)
+      fmt = dateFmt.formatDate("%s")
+      expect(fmt).toEqual("9")
     });
 
     it("should format all date chained", function() {
