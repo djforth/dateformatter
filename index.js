@@ -4,6 +4,8 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
+require("babel/polyfill");
+
 var DateFormatter = (function () {
   function DateFormatter() {
     _classCallCheck(this, DateFormatter);
@@ -44,7 +46,7 @@ var DateFormatter = (function () {
     },
     dateFix: {
       value: function dateFix(date_str) {
-        // yyyy-mm-dd hh:mm
+        // yyyy-mm-dd hh:mm:ss
         // yyyy-mm-dd hh:mm
         // yyyy-mm-dd
         var date_regex = /^\s*(\d{4})-(\d{2})-(\d{2})+!?(\s(\d{2}):(\d{2})|\s(\d{2}):(\d{2}):(\d+))?$/;
@@ -114,14 +116,21 @@ var DateFormatter = (function () {
         fmt = fmt.replace("%a", this.SHORT_DAYS[date.getDay()]);
         // Set Day
         fmt = fmt.replace("%A", this.DAYS[date.getDay()]);
-        // Set Hours - 24
+        // Set Hours - 24 with 0
         fmt = fmt.replace("%H", this.fixTime(date.getHours()));
+        // Set Hours - 24 without 0
+        fmt = fmt.replace("%h", date.getHours());
         // Set Hours - 12
         fmt = fmt.replace("%-l", this.set12Hour(date.getHours()));
-        // Set Mins
+        // Set Mins with 0
         fmt = fmt.replace("%M", this.fixTime(date.getMinutes()));
-        // Set Secs
+        // Set Mins no 0
+        console.log("m", date.getMinutes());
+        fmt = fmt.replace("%-M", String(date.getMinutes()));
+        // Set Secs with 0
         fmt = fmt.replace("%S", this.fixTime(date.getSeconds()));
+        // Set Secs without 0
+        fmt = fmt.replace("%s", date.getSeconds());
         // Set AMPM
         fmt = fmt.replace("%p", this.AMPM);
 
@@ -156,23 +165,9 @@ var DateFormatter = (function () {
     setDate: {
       value: function setDate() {
         var args = Array.prototype.slice.call(arguments);
-        if (this.isString(args[0]) && this.date_test.test(args[0])) {
-          this.date = this.dateFix(args[0]);
-        } else {
-          if (this.isString(args[0])) {
-            this.date = new Date(args[0]);
-          } else {
-            this.date = new Date(Date.UTC.apply(null, args));
-          }
-        }
-      }
-    }
-  });
 
-  return DateFormatter;
-})();
-
-module.exports = DateFormatter;//If Date
+        if (this.isDate(args[0])) {
+          //If Date
           this.date = args[0];
         } else if (this.isString(args[0]) && this.date_test.test(args[0])) {
           // If date str with -

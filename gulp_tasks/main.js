@@ -25,7 +25,11 @@ gulp.task("app", function () {
 
   var bundle = browserify({entries: [sourceFile],extensions: ['.js', '.coffee'], debug:false});
 
-  bundle.transform(babelify)
+  bundle.transform(
+    babelify.configure(
+      {optional: ["spec.protoToAssign"] }
+    )
+  );
   bundle.transform(uglifyify)
 
   return bundleShare(bundle, "date_formatter.min.js")
