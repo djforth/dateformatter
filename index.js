@@ -172,4 +172,23 @@ var DateFormatter = (function () {
   return DateFormatter;
 })();
 
+module.exports = DateFormatter;//If Date
+          this.date = args[0];
+        } else if (this.isString(args[0]) && this.date_test.test(args[0])) {
+          // If date str with -
+          this.date = this.dateFix(args[0]);
+        } else if (this.isString(args[0])) {
+          // if other date str standard
+          this.date = new Date(args[0]);
+        } else {
+          // if numbers
+          this.date = new Date(Date.UTC.apply(null, args));
+        }
+      }
+    }
+  });
+
+  return DateFormatter;
+})();
+
 module.exports = DateFormatter;
