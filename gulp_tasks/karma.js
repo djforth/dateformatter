@@ -19,6 +19,15 @@ gulp.task('karma', function() {
     }));
 });
 
+gulp.task('karma:semaphore', function() {
+  gulp.src(testFiles)
+    .pipe(karma({
+      configFile: karma_config,
+      action: 'run',
+      browsers: ['PhantomJS']
+    }));
+});
+
 gulp.task('karma:all', function() {
   gulp.src(testFiles)
     .pipe(karma({

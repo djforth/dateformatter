@@ -30,6 +30,12 @@ describe('DateFormatter', function(){
       expect(dateFmt.getDate()).toEqual(new Date(2015,0,18))
     });
 
+    it("should create dateTime on creation if string with -", function() {
+      dateFmt = new DateFormatter('2015-01-18 09:00');
+      expect(dateFmt.getDate()).toEqual(new Date(2015,0,18, 9))
+    });
+
+
     it("should create date on creation if string with slash ", function() {
       dateFmt = new DateFormatter('2015/01/18');
       expect(dateFmt.getDate()).toEqual(new Date(2015,0,18))
@@ -43,7 +49,9 @@ describe('DateFormatter', function(){
         time_str,
         time_obj,
         time2_str,
-        time2_obj;
+        time2_obj,
+        time3_str,
+        time3_obj;
 
     beforeEach(function(){
       date_str = '2015-01-18';
@@ -54,6 +62,9 @@ describe('DateFormatter', function(){
 
       time2_str = '2015-01-18 16:44:33'
       time2_obj = new Date(2015, 0, 18, 16, 44, 33)
+
+      time3_str = '2015-01-18 09:44:33'
+      time3_obj = new Date(2015, 0, 18, 9, 44, 33)
 
     })
 
@@ -80,6 +91,12 @@ describe('DateFormatter', function(){
       let date = dateFmt.dateFix(time2_str);
       expect(_.isDate(date)).toBeTruthy();
       expect(date.getTime()).toEqual(time2_obj.getTime());
+    })
+
+    it('should return correct date', function(){
+      let date = dateFmt.dateFix(time3_str);
+      expect(_.isDate(date)).toBeTruthy();
+      expect(date.getTime()).toEqual(time3_obj.getTime());
     })
   });
 

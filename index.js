@@ -14,7 +14,7 @@ var DateFormatter = (function () {
     // yyyy-mm-dd hh:mm:ss
     // yyyy-mm-dd hh:mm
     // yyyy-mm-dd
-    this.date_test = /^\d{4}-\d{2}-\d{2}( \d{2}:\d{2}:\d{2}(\.\d{3})?)?$/;
+    this.date_regex = /^\s*(\d{4})-(\d{2})-(\d{2})+!?(\s(\d{2}):(\d{2})|\s(\d{2}):(\d{2}):(\d+))?$/;
 
     this.date = null;
     this.AMPM = "am";
@@ -49,8 +49,8 @@ var DateFormatter = (function () {
         // yyyy-mm-dd hh:mm:ss
         // yyyy-mm-dd hh:mm
         // yyyy-mm-dd
-        var date_regex = /^\s*(\d{4})-(\d{2})-(\d{2})+!?(\s(\d{2}):(\d{2})|\s(\d{2}):(\d{2}):(\d+))?$/;
-        var matches = date_str.match(date_regex);
+        // let date_regex = /^\s*(\d{4})-(\d{2})-(\d{2})+!?(\s(\d{2}):(\d{2})|\s(\d{2}):(\d{2}):(\d+))?$/;
+        var matches = date_str.match(this.date_regex);
 
         if (matches) {
           matches = this.compact(matches);
@@ -169,7 +169,7 @@ var DateFormatter = (function () {
         if (this.isDate(args[0])) {
           //If Date
           this.date = args[0];
-        } else if (this.isString(args[0]) && this.date_test.test(args[0])) {
+        } else if (this.isString(args[0]) && this.date_regex.test(args[0])) {
           // If date str with -
           this.date = this.dateFix(args[0]);
         } else if (this.isString(args[0])) {
