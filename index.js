@@ -105,13 +105,17 @@ var DateFormatter = (function () {
         // Full Year
         fmt = fmt.replace("%Y", date.getFullYear());
         // Set Numbered Month
-        fmt = fmt.replace("%m", date.getMonth() + 1);
+        fmt = fmt.replace("%m", this.fixTime(date.getMonth() + 1));
+        // Set Numbered Month
+        fmt = fmt.replace("%-m", date.getMonth() + 1);
         // Set Short Month
         fmt = fmt.replace("%b", this.SHORT_MONTHS[date.getMonth()]);
         // Set Month
         fmt = fmt.replace("%B", this.MONTHS[date.getMonth()]);
         // Set Date
-        fmt = fmt.replace("%d", date.getDate());
+        fmt = fmt.replace("%d", this.fixTime(date.getDate()));
+        // Set Date
+        fmt = fmt.replace("%-d", date.getDate());
         // Set Short Day
         fmt = fmt.replace("%a", this.SHORT_DAYS[date.getDay()]);
         // Set Day
