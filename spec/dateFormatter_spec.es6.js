@@ -135,8 +135,13 @@ describe('DateFormatter', function(){
       expect(yr).toEqual("15")
     });
 
-    it('show month', function(){
+    it('show month with 0', function(){
       let fmt = dateFmt.formatDate("%m")
+      expect(fmt).toEqual("01")
+    });
+
+    it('show month without 0', function(){
+      let fmt = dateFmt.formatDate("%-m")
       expect(fmt).toEqual("1")
     });
 
@@ -150,10 +155,18 @@ describe('DateFormatter', function(){
       expect(fmt).toEqual("Jan")
     });
 
-    it('show date', function(){
+    it('show date with 0', function(){
+      date_obj.setDate(9)
       let fmt = dateFmt.formatDate("%d")
-      expect(fmt).toEqual("18")
+      expect(fmt).toEqual("09")
     });
+
+    it('show date without', function(){
+      date_obj.setDate(9)
+      let fmt = dateFmt.formatDate("%-d")
+      expect(fmt).toEqual("9")
+    });
+
 
     it('show day text short', function(){
       let fmt = dateFmt.formatDate("%a")
@@ -197,7 +210,6 @@ describe('DateFormatter', function(){
 
     it('show minutes without 0', function(){
       let fmt = dateFmt.formatDate("%-M")
-      console.log('fmt', fmt);
       expect(fmt).toEqual("44")
       expect(dateFmt.fixTime).toHaveBeenCalled()
 

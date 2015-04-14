@@ -125,7 +125,6 @@ var DateFormatter = (function () {
         // Set Mins with 0
         fmt = fmt.replace("%M", this.fixTime(date.getMinutes()));
         // Set Mins no 0
-        console.log("m", date.getMinutes());
         fmt = fmt.replace("%-M", String(date.getMinutes()));
         // Set Secs with 0
         fmt = fmt.replace("%S", this.fixTime(date.getSeconds()));
