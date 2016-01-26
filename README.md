@@ -7,7 +7,7 @@ Install via NPM
 
 ``` bash
 
-npm install dateformatter
+npm install @djforth/date-formatter
 
 ```
 
@@ -15,7 +15,7 @@ or via bower
 
 ``` bash
 
-bower install dateformatter
+bower install @djforth/date-formatter
 
 ```
 
