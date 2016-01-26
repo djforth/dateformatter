@@ -4,7 +4,11 @@
   "description": "Date Formatter",
   "main": "index.js",
   "scripts": {
-    "test": "gulp karma"
+    "test": "./node_modules/.bin/karma start --browsers PhantomJS --single-run",
+    "test:watch": "karma start --browsers PhantomJS",
+    "test:ie9": "karma start --single-run --browsers \"IE9 - Win7\"",
+    "test:ie10": "karma start --single-run --browsers \"IE10 - Win7\"",
+    "test:mac": "karma start --single-run --browsers Chrome,Firefox,Safari,Opera"
   },
   "repository": {
     "type": "git",
@@ -44,7 +48,7 @@
     "karma-opera-launcher": "^0.1.0",
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-safari-launcher": "^0.1.1",
-    "lodash": "^3.2.0",
+    "lodash": "^3.10.1",
     "require-dir": "^0.1.0",
     "uglifyify": "^3.0.1",
     "vinyl-source-stream": "^1.0.0",
