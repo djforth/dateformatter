@@ -1,6 +1,6 @@
 {
   "name": "date-formatter",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Date Formatter",
   "main": "index.js",
   "scripts": {
