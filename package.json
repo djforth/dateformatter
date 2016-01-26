@@ -1,10 +1,10 @@
 {
-  "name": "date-formatter",
+  "name": "@djforth/date-formatter",
   "version": "1.0.3",
   "description": "Date Formatter",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/karma start --browsers PhantomJS --single-run",
+    "test": "karma start --browsers PhantomJS --single-run",
     "test:watch": "karma start --browsers PhantomJS",
     "test:ie9": "karma start --single-run --browsers \"IE9 - Win7\"",
     "test:ie10": "karma start --single-run --browsers \"IE10 - Win7\"",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/djforth/dateformatter.git"
+    "url": "git+https://github.com/djforth/dateformatter.git"
   },
   "bugs": {
     "url": "https://github.com/djforth/dateformatter/issues"
@@ -53,5 +53,6 @@
     "uglifyify": "^3.0.1",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.3.0"
-  }
+  },
+  "dependencies": {}
 }
